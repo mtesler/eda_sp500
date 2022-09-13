@@ -15,8 +15,6 @@ This app performs simple webscraping of S&P500 companies data.
 
 ## Authors
 
-Contributors names and contact info
-
 Michal Tesler
 
 ## Version History
