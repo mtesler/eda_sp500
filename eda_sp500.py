@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import yfinance as yf
 
 
 def load_data():
@@ -10,4 +11,11 @@ def load_data():
 
 
 df = load_data()
-print(df)
+
+# Download financial data
+data = yf.download(tickers=list(df.Symbol), period='ytd', interval='1d',
+                   group_by='ticker', auto_adjust=True, prepost=True, threads=True, proxy=None)
+
+
+data['Date'] = data.index
+data.reset_index(drop=True, inplace=True)
