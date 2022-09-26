@@ -15,3 +15,7 @@ df = load_data()
 # Download financial data
 data = yf.download(tickers=list(df.Symbol), period='ytd', interval='1d',
                    group_by='ticker', auto_adjust=True, prepost=True, threads=True, proxy=None)
+
+
+data['Date'] = data.index
+data.reset_index(drop=True, inplace=True)
