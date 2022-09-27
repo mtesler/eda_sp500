@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 import yfinance as yf
+import matplotlib.pyplot as plt
 
 
 def load_data():
@@ -19,3 +20,20 @@ data = yf.download(tickers=list(df.Symbol), period='ytd', interval='1d',
 
 data['Date'] = data.index
 data.reset_index(drop=True, inplace=True)
+
+# Create plot based on closing price
+
+
+def price_plot(symbol):
+    df = pd.DataFrame(data[symbol].Close)
+    df['Date'] = df.index
+    plt.fill_between(df.Date, df.Close, color='skyblue', alpha=0.3)
+    plt.plot(df.Date, df.Close, color='skyblue', alpha=0.8)
+    plt.xticks(rotation=90)
+    plt.title(symbol, fontweight='bold')
+    plt.xlabel('Date', fontweight='bold')
+    plt.ylabel('Closing price', fontweight='bold')
+    return plt.show()
+
+
+price_plot('AAPL')
