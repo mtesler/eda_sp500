@@ -11,7 +11,10 @@ This app retrieves the list of the **S&P500** (from Wikipedia) and its correspon
 
 st.sidebar.header('User Input Features')
 
+# Web scraping of S&P500 data
 
+
+@st.cache
 def load_data():
     url = 'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'
     html = pd.read_html(url, header=0)
@@ -20,6 +23,11 @@ def load_data():
 
 
 df = load_data()
+sector = df.groupby('GICS Sector')
+
+# Sidebar - Sector selection
+sorted_sector_unique = sorted(df['GICS Sector'].unique())
+selected_sector = st.sidebar.multiselect('Sector', sorted_sector_unique)
 
 # Download financial data
 data = yf.download(tickers=list(df.Symbol), period='ytd', interval='1d',
@@ -28,6 +36,7 @@ data = yf.download(tickers=list(df.Symbol), period='ytd', interval='1d',
 
 data['Date'] = data.index
 data.reset_index(drop=True, inplace=True)
+st.write(df)
 
 # Create plot based on closing price
 
