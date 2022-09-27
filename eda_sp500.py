@@ -9,6 +9,8 @@ st.markdown("""
 This app retrieves the list of the **S&P500** (from Wikipedia) and its corresponding **stock closing price** (year-to-date)
 """)
 
+st.sidebar.header('User Input Features')
+
 
 def load_data():
     url = 'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'
