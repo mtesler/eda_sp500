@@ -32,14 +32,17 @@ selected_sector = st.sidebar.multiselect('Sector', sorted_sector_unique)
 # Filtering data
 df_selected_sector = df[(df['GICS Sector'].isin(selected_sector))]
 
+st.header('Display companies in Selected Sector')
+st.write('Data Dimension: ' + str(df_selected_sector.shape[0]) + ' rows and ' + str(
+    df_selected_sector.shape[1]) + ' columns.')
+st.write(df_selected_sector)
+
 # Download financial data
 data = yf.download(tickers=list(df.Symbol), period='ytd', interval='1d',
                    group_by='ticker', auto_adjust=True, prepost=True, threads=True, proxy=None)
 
-
 data['Date'] = data.index
 data.reset_index(drop=True, inplace=True)
-st.write(df_selected_sector)
 
 # Create plot based on closing price
 
