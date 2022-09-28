@@ -1,3 +1,4 @@
+import base64
 import pandas as pd
 import streamlit as st
 import yfinance as yf
@@ -36,6 +37,18 @@ st.header('Display companies in Selected Sector')
 st.write('Data Dimension: ' + str(df_selected_sector.shape[0]) + ' rows and ' + str(
     df_selected_sector.shape[1]) + ' columns.')
 st.write(df_selected_sector)
+
+# Download S&P500 data
+
+
+def file_download(df):
+    csv = df.to_csv(index=False)
+    b64 = base64.b64encode(csv.encode()).decode()
+    href = f'<a href="data:file/csv;base64,{b64}" download="SP500.csv">Download CSV File</a>'
+    return href
+
+
+st.markdown(file_download(df_selected_sector), unsafe_allow_html=True)
 
 # Download financial data
 data = yf.download(tickers=list(df.Symbol), period='ytd', interval='1d',
