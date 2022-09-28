@@ -29,6 +29,9 @@ sector = df.groupby('GICS Sector')
 sorted_sector_unique = sorted(df['GICS Sector'].unique())
 selected_sector = st.sidebar.multiselect('Sector', sorted_sector_unique)
 
+# Filtering data
+df_selected_sector = df[(df['GICS Sector'].isin(selected_sector))]
+
 # Download financial data
 data = yf.download(tickers=list(df.Symbol), period='ytd', interval='1d',
                    group_by='ticker', auto_adjust=True, prepost=True, threads=True, proxy=None)
@@ -36,7 +39,7 @@ data = yf.download(tickers=list(df.Symbol), period='ytd', interval='1d',
 
 data['Date'] = data.index
 data.reset_index(drop=True, inplace=True)
-st.write(df)
+st.write(df_selected_sector)
 
 # Create plot based on closing price
 
