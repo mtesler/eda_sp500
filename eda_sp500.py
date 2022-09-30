@@ -28,7 +28,8 @@ sector = df.groupby('GICS Sector')
 
 # Sidebar - Sector selection
 sorted_sector_unique = sorted(df['GICS Sector'].unique())
-selected_sector = st.sidebar.multiselect('Sector', sorted_sector_unique)
+selected_sector = st.sidebar.multiselect(
+    'Sector', sorted_sector_unique, default=sorted_sector_unique)
 
 # Filtering data
 df_selected_sector = df[(df['GICS Sector'].isin(selected_sector))]
