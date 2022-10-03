@@ -61,16 +61,23 @@ data = yf.download(tickers=list(df.Symbol), period='ytd', interval='1d',
 data['Date'] = data.index
 data.reset_index(drop=True, inplace=True)
 
-# # Create plot based on closing price
+# Create plot based on closing price
 
 
-# def price_plot(symbol):
-#     df = pd.DataFrame(data[symbol].Close)
-#     df['Date'] = df.index
-#     plt.fill_between(df.Date, df.Close, color='skyblue', alpha=0.3)
-#     plt.plot(df.Date, df.Close, color='skyblue', alpha=0.8)
-#     plt.xticks(rotation=90)
-#     plt.title(symbol, fontweight='bold')
-#     plt.xlabel('Date', fontweight='bold')
-#     plt.ylabel('Closing price', fontweight='bold')
-#     return st.pyplot(price_plot)
+def price_plot(symbol):
+    df = pd.DataFrame(data[symbol].Close)
+    df['Date'] = df.index
+    plt.fill_between(df.Date, df.Close, color='skyblue', alpha=0.3)
+    plt.plot(df.Date, df.Close, color='skyblue', alpha=0.8)
+    plt.xticks(rotation=90)
+    plt.title(symbol, fontweight='bold')
+    plt.xlabel('Date', fontweight='bold')
+    plt.ylabel('Closing price', fontweight='bold')
+    return st.pyplot()
+
+
+# Show / hide plots button
+if st.button('Show Plots'):
+    st.header('Stock Closing Price')
+    for i in list(df_selected_sector.Symbol)[:num_company]:
+        price_plot(i)
