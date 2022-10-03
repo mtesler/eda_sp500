@@ -55,7 +55,7 @@ def file_download(df):
 st.markdown(file_download(df_selected_sector), unsafe_allow_html=True)
 
 # Download financial data
-data = yf.download(tickers=list(df.Symbol), period='ytd', interval='1d',
+data = yf.download(tickers=list(df_selected_sector[:10].Symbol), period='ytd', interval='1d',
                    group_by='ticker', auto_adjust=True, prepost=True, threads=True, proxy=None)
 
 data['Date'] = data.index
