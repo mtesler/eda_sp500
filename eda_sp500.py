@@ -31,6 +31,9 @@ sorted_sector_unique = sorted(df['GICS Sector'].unique())
 selected_sector = st.sidebar.multiselect(
     'Sector', sorted_sector_unique, default=sorted_sector_unique)
 
+# Sidebar - Number of companies selection (to show on charts)
+num_company = st.sidebar.slider('Number of Companies', 1, 5)
+
 # Filtering data
 df_selected_sector = df[(df['GICS Sector'].isin(selected_sector))]
 
