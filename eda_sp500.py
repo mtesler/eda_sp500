@@ -28,14 +28,24 @@ sector = df.groupby('GICS Sector')
 
 # Sidebar - Sector selection
 sorted_sector_unique = sorted(df['GICS Sector'].unique())
-selected_sector = st.sidebar.multiselect(
-    'Sector', sorted_sector_unique, default=sorted_sector_unique)
+selected_sector = []
+
+
+def clear_multi():
+    st.session_state.multiselect = sorted_sector_unique
+    return
+
+
+multi = st.sidebar.multiselect(
+    'Sector', sorted_sector_unique, default=sorted_sector_unique, key='multiselect')
+
+st.sidebar.button('Select all sectors', on_click=clear_multi)
 
 # Sidebar - Number of companies selection (to show on charts)
 num_company = st.sidebar.slider('Number of Companies', 1, 5)
 
 # Filtering data
-df_selected_sector = df[(df['GICS Sector'].isin(selected_sector))]
+df_selected_sector = df[(df['GICS Sector'].isin(multi))]
 
 st.header('Display companies in Selected Sector')
 st.write('Data Dimension: ' + str(df_selected_sector.shape[0]) + ' rows and ' + str(
